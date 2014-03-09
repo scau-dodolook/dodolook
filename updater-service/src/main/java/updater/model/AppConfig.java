@@ -14,7 +14,7 @@ public class AppConfig {
 	private String updateService;
 	private String versionFile;
 	private String updateFile;
-	private String localVersion;
+	private String version;
 	private String interval;
 	private Command command;
 	/**
@@ -78,16 +78,16 @@ public class AppConfig {
 		this.updateFile = updateFile;
 	}
 	/**
-	 * @return the localVersion
+	 * @return the version
 	 */
-	public String getLocalVersion() {
-		return localVersion;
+	public String getVersion() {
+		return version;
 	}
 	/**
-	 * @param localVersion the localVersion to set
+	 * @param localVersion the version to set
 	 */
-	public void setLocalVersion(String localVersion) {
-		this.localVersion = localVersion;
+	public void setVersion(String version) {
+		this.version = version;
 	}
 	/**
 	 * @return the interval

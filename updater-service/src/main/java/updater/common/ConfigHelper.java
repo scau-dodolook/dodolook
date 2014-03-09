@@ -23,7 +23,7 @@ import updater.model.UpdaterConfig;
 import com.thoughtworks.xstream.XStream;
 
 public class ConfigHelper {
-	private static final String configFilePath = "E:/Java Workspace/app.updaterService/src/test/resources/UpdaterConfig.xml";
+	private static final String configFilePath = System.getProperty("user.dir") + "/src/test/resources/RemoteServerConfig.xml";
 	private static String configFileMD5 = "";
 	private static UpdaterConfig config;
 
@@ -84,7 +84,7 @@ public class ConfigHelper {
 			FileNotFoundException {
 		UpdaterConfig updaterCfg;
 
-		File configFile = new File(configFilePath);
+		File configFile = new File(configFilePath); 
 		if (!configFile.exists())
 			throw new ConfigNotFoundException();
 
@@ -100,8 +100,8 @@ public class ConfigHelper {
 
 		for (AppConfig appCfg : updaterConfig.getAppConfigs()) {
 			if (StringUtils.equals(appCfg.getAppCode(), appCode)
-					&& !StringUtils.equals(version, appCfg.getLocalVersion())) {
-				appCfg.setLocalVersion(version);
+					&& !StringUtils.equals(version, appCfg.getVersion())) {
+				appCfg.setVersion(version);
 
 				try {
 					XStream xStream = getConfigXStream();
