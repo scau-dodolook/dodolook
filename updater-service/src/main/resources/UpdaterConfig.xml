@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding =" UTF-8" ?>
+<appUpdaterConfig>
+  <appConfigs>
+    < app>
+      < appCode>nsca</appCode >
+      < appInstallDic>C://program file/ </appInstallDic>
+      < updateService>http://10.201.76.235/NewVersionApp/NscaAgent </updateService>
+      < versionFile>update.xml </versionFile> 
+      <version>1.1.19</version>
+      < interval>24h</interval > 
+    </ app>
+  </appConfigs>
+</appUpdaterConfig>
