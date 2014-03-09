@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding =" UTF-8" ?>
+<appUpdaterConfig>
+  <appConfigs>
+    <app>
+      <appCode>app1</appCode > 
+      <updateFile>app1.zip</updateFile>
+      <version>1.1.19</version> 
+      <cmdCommand>
+        <beforUpdate>bb</beforUpdate >
+        <afterUpdate>aa</afterUpdate >
+      </cmdCommand>
+    </app>
+  </appConfigs>
+</appUpdaterConfig>
