@@ -17,7 +17,7 @@ public class ConfigHelperTest {
 	@Test
 	public void configReadTest(){
 		ConfigHelper updaterConfig = new ConfigHelper();
-		UpdaterConfig config = updaterConfig.getUpdaterConfig();
+		UpdaterConfig config = updaterConfig.getLocalConfig();
 		JSONObject jsonObject = JSONObject.fromObject( config );
 		System.out.println(jsonObject);
 	}
@@ -33,7 +33,7 @@ public class ConfigHelperTest {
 	@Test
 	public void updateVersionTest(){ 
 		ConfigHelper updaterConfig = new ConfigHelper();
-		UpdaterConfig config = updaterConfig.getUpdaterConfig();
+		UpdaterConfig config = updaterConfig.getLocalConfig();
 		JSONObject jsonObject = JSONObject.fromObject( config );
 		System.out.println(jsonObject);
 		
@@ -44,7 +44,7 @@ public class ConfigHelperTest {
 				updaterConfig.UpdateAppVersion("nsca", version);
 			}
 			 
-			config = updaterConfig.getUpdaterConfig();
+			config = updaterConfig.getLocalConfig();
 			jsonObject = JSONObject.fromObject( config );
 			System.out.println(jsonObject);
 			i++;

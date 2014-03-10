@@ -11,6 +11,9 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -27,7 +30,11 @@ public class ConfigHelper {
 	private static String configFileMD5 = "";
 	private static UpdaterConfig config;
 
-	public UpdaterConfig getUpdaterConfig() {
+	/**
+	 * 获取本地配置
+	 * @return
+	 */
+	public UpdaterConfig getLocalConfig() {
 		if ((config == null) || (conifgFileChanged())) {
 			try {
 				config = readConfig();
@@ -39,7 +46,41 @@ public class ConfigHelper {
 		}
 		return config;
 	}
+	
+	/**
+	 * 获取远程服务器上的配置文件
+	 * @return
+	 */
+	public UpdaterConfig getRemoteConfig(AppConfig appConfig){ 
+		UpdaterConfig remoteConfig = null; 
+		HttpURLConnection httpUrl = null;
+		
+		try { 
+			URL url = new URL(getRomoteConfigUrl(appConfig));
+			httpUrl = (HttpURLConnection) url.openConnection();
 
+			httpUrl.connect();  
+			XStream xStream = getConfigXStream(); 
+			remoteConfig = (UpdaterConfig) xStream.fromXML(httpUrl.getInputStream()); 
+			
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			if (httpUrl != null)
+				httpUrl.disconnect();
+		}
+		
+		return remoteConfig;
+	}
+
+	/**
+	 * 检查配置文件是否有更新
+	 * @return
+	 */
 	public boolean conifgFileChanged() {
 		File configFile = new File(configFilePath);
 		MessageDigest digest = null;
@@ -80,6 +121,12 @@ public class ConfigHelper {
 		return true;
 	}
 
+	/**
+	 * 读取配置文件内容
+	 * @return
+	 * @throws ConfigNotFoundException
+	 * @throws FileNotFoundException
+	 */
 	private UpdaterConfig readConfig() throws ConfigNotFoundException,
 			FileNotFoundException {
 		UpdaterConfig updaterCfg;
@@ -95,8 +142,13 @@ public class ConfigHelper {
 		return updaterCfg;
 	}
 
+	/**
+	 * 更新应用程序版本
+	 * @param appCode
+	 * @param version
+	 */
 	public void UpdateAppVersion(String appCode, String version) {
-		UpdaterConfig updaterConfig = getUpdaterConfig();
+		UpdaterConfig updaterConfig = getLocalConfig();
 
 		for (AppConfig appCfg : updaterConfig.getAppConfigs()) {
 			if (StringUtils.equals(appCfg.getAppCode(), appCode)
@@ -119,6 +171,10 @@ public class ConfigHelper {
 		}
 	}
 
+	/**
+	 * 获取XStream
+	 * @return
+	 */
 	private XStream getConfigXStream() {
 		XStream xStream = new XStream();
 
@@ -128,4 +184,22 @@ public class ConfigHelper {
 
 		return xStream;
 	}
+
+	/**
+	 * 获取服务端配置文件url地址
+	 * @param appConfig
+	 * @return
+	 */
+	private String getRomoteConfigUrl(AppConfig appConfig){
+		String remoteConfigUrl;
+		
+		StringBuffer urlParts = new StringBuffer();
+		urlParts.append(appConfig.getUpdateService());
+		urlParts.append(File.separator);
+		urlParts.append(appConfig.getVersionFile());
+		remoteConfigUrl = urlParts.toString();
+		
+		return remoteConfigUrl;
+	}
+
 }
