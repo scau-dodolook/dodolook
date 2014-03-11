@@ -6,7 +6,12 @@
       <updateService>http://www.updaterserver.com:8008</updateService>
       <versionFile>update.xml </versionFile> 
       <version>1.1.19</version>
-      <interval>24h</interval > 
+      <interval>24h</interval >
+      
+      <command>
+        <beforUpdate>bb</beforUpdate >
+        <afterUpdate>aa</afterUpdate >
+      </command> 
     </app>
   </appConfigs>
 </appUpdaterConfig>

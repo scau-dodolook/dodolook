@@ -16,6 +16,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -51,8 +52,8 @@ public class ConfigHelper {
 	 * 获取远程服务器上的配置文件
 	 * @return
 	 */
-	public UpdaterConfig getRemoteConfig(AppConfig appConfig){ 
-		UpdaterConfig remoteConfig = null; 
+	public AppConfig getRemoteConfig(AppConfig appConfig){ 
+		AppConfig remoteAppConfig = null;
 		HttpURLConnection httpUrl = null;
 		
 		try { 
@@ -61,8 +62,17 @@ public class ConfigHelper {
 
 			httpUrl.connect();  
 			XStream xStream = getConfigXStream(); 
-			remoteConfig = (UpdaterConfig) xStream.fromXML(httpUrl.getInputStream()); 
+			UpdaterConfig remoteConfig = (UpdaterConfig) xStream.fromXML(httpUrl.getInputStream()); 
 			
+			List<AppConfig> appConfigs = remoteConfig.getAppConfigs();
+			if (appConfigs != null && !appConfigs.isEmpty()){
+				for(AppConfig aConfig : appConfigs){
+					if (StringUtils.equalsIgnoreCase(appConfig.getAppCode(), aConfig.getAppCode())){
+						remoteAppConfig = aConfig;
+						break;
+					}
+				}
+			}
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -74,7 +84,7 @@ public class ConfigHelper {
 				httpUrl.disconnect();
 		}
 		
-		return remoteConfig;
+		return remoteAppConfig;
 	}
 
 	/**

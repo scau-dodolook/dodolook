@@ -8,6 +8,11 @@
       <versionFile></versionFile> 
       <version></version>
       <interval></interval > 
+      
+      <command>
+        <beforUpdate></beforUpdate >
+        <afterUpdate></afterUpdate >
+      </command>
     </app>
   </appConfigs>
 </appUpdaterConfig>

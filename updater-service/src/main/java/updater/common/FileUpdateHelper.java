@@ -36,8 +36,7 @@ public class FileUpdateHelper {
 			httpUrl = (HttpURLConnection) url.openConnection();
 			
 			File targetFile = new File(saveDir, url.getFile());
-			fileSavePath = targetFile.getPath();
-			System.out.println(fileSavePath);
+			fileSavePath = targetFile.getPath(); 
 			if (targetFile.exists())
 				targetFile.delete();
 			
@@ -53,6 +52,7 @@ public class FileUpdateHelper {
 			
 			out.close();
 			in.close();  
+			httpUrl.disconnect();
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -67,9 +67,8 @@ public class FileUpdateHelper {
 	public void unzipFile(String zipFilePath, String targetDir){ 
 		File zipFile = new File(zipFilePath);
 		
-		if (!zipFile.isFile() || !zipFile.exists()){
-			System.out.println("指定文件不存在.");
-		}
+		if (!zipFile.isFile() || !zipFile.exists())
+			System.out.println("压缩文件不存在");
 		
 		try {
 			ZipFile zFile = new ZipFile(zipFile);
@@ -78,11 +77,11 @@ public class FileUpdateHelper {
 				System.out.println("压缩文件不合法,可能已被损坏.");
 			}
 			
-			File destDir = new File("C:/Users/ASUS/Desktop/ZipTest/");
+			File destDir = new File(targetDir);
 			if (destDir.isDirectory() && !destDir.exists()){
 				destDir.mkdirs();
 			}
-			
+			 
 			zFile.extractAll(destDir.getPath());
 		} catch (ZipException e) {
 			// TODO Auto-generated catch block

@@ -19,4 +19,13 @@ public class FileUpdateHelperTest {
 		String fileSavePath = fileUpdateHelper.downloadUpdateFile(fileUrl, saveDir);
 		System.out.println(fileSavePath);
 	}
+	
+	@Test
+	public void testUnzip(){
+		String filePath = "F:/NSCA_Service.zip";
+		String targetDic = "F:/Unzip";
+		
+		FileUpdateHelper fileUpdateHelper = new FileUpdateHelper();
+		fileUpdateHelper.unzipFile(filePath, targetDic);  
+	}
 }

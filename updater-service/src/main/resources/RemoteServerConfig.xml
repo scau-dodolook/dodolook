@@ -4,11 +4,6 @@
       <appCode></appCode > 
       <updateFile></updateFile>
       <version></version> 
-      
-      <command>
-        <beforUpdate></beforUpdate >
-        <afterUpdate></afterUpdate >
-      </command>
     </app>
   </appConfigs>
 </appUpdaterConfig>
