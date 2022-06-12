@@ -1,6 +1,6 @@
-## 构建 `docker build -t xdodolook/module3-httpserver:1.0 .`
-``` bash
-[root@cmp-workcluster module3]# docker build -t xdodolook/module3-httpserver:1.0 .
+## 1. 构建镜像 `docker build -t xdodolook/module3-httpserver:1.0 .`
+```bash
+[module3]# docker build -t xdodolook/module3-httpserver:1.0 .
 Sending build context to Docker daemon  4.608kB
 Step 1/9 : FROM golang:alpine as builder
  ---> d8bf44a3f6b4
@@ -31,9 +31,9 @@ Successfully built fd65b765e538
 Successfully tagged xdodolook/module3-httpserver:1.0
 ```
 
-## 推送镜像 `docker push xdodolook/module3-httpserver:1.0`
-``` bash
-[root@cmp-workcluster module3]# docker build -t xdodolook/module3-httpserver:1.0 .
+## 2. 推送镜像 `docker push xdodolook/module3-httpserver:1.0`
+```bash
+[module3]# docker build -t xdodolook/module3-httpserver:1.0 .
 Sending build context to Docker daemon  4.608kB
 Step 1/9 : FROM golang:alpine as builder
  ---> d8bf44a3f6b4
@@ -62,22 +62,22 @@ Step 9/9 : ENTRYPOINT ["./main"]
  ---> fd65b765e538
 Successfully built fd65b765e538
 Successfully tagged xdodolook/module3-httpserver:1.0
-[root@cmp-workcluster module2]# docker push xdodolook/module3-httpserver:1.0
+[module3]# docker push xdodolook/module3-httpserver:1.0
 The push refers to repository [docker.io/xdodolook/module3-httpserver]
 cdb0f1fdd95a: Pushed
 8d3ac3489996: Layer already exists
 1.0: digest: sha256:b339b3c66dc5bfa195c6cbaaf165df11f46b1a395ee5ae200b39cb57816546f8 size: 739
 ``` 
 
-## 运行 `docker run -d -p8080:8080 xdodolook/module3-httpserver:1.0`
-``` bash
-[root@cmp-workcluster module2]# docker run -d -p8080:8080 xdodolook/module3-httpserver:1.0
+## 3. 运行镜像 `docker run -d -p8080:8080 xdodolook/module3-httpserver:1.0`
+```bash
+[module3]# docker run -d -p8080:8080 xdodolook/module3-httpserver:1.0
 84eedf3925e523e4f35ec5e93c517a32cccd188d29e08f4bf5ee69b773ad18d5
 ```
 
-## 查看容器网络配置 `nsenter -t 25042 -n ip a`
+## 4. 查看容器网络配置 `nsenter -t 25042 -n ip a`
 ```bash
-[root@cmp-workcluster module2]# docker inspect 84eedf3925e523e4f35ec5e93c517a32cccd188d29e08f4bf5ee69b773ad18d5 | grep Pid
+[module3]# docker inspect 84eedf3925e523e4f35ec5e93c517a32cccd188d29e08f4bf5ee69b773ad18d5 | grep Pid
 "Pid": 25042,
 "PidMode": "",
 "PidsLimit": null,
